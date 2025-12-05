@@ -3,81 +3,100 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Foro Informativo — Demo</title>
+  <title>BlackStreamCL Forum — Réplica (Demo)</title>
   <style>
+    /* Palette inspired by dark/forum style */
     :root{
-      --bg:#f6f7fb; --card:#ffffff; --muted:#6b7280; --accent:#1f6feb;
-      --shadow: 0 6px 20px rgba(18,38,63,0.08);
+      --bg:#0b0d10;
+      --panel:#0f1317;
+      --muted:#9aa4b2;
+      --accent:#00b4ff;
+      --accent-2:#7c3aed;
+      --card:#0e1114;
+      --glass: rgba(255,255,255,0.035);
+      --success:#22c55e;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial; background:var(--bg); color:#0f1724; -webkit-font-smoothing:antialiased}
-    .wrap{max-width:1100px;margin:28px auto;padding:18px}
-    header{display:flex;align-items:center;gap:18px;margin-bottom:18px}
-    .brand{display:flex;flex-direction:column}
-    .brand h1{margin:0;font-size:20px;letter-spacing:-0.2px}
-    .brand p{margin:0;color:var(--muted);font-size:13px}
-    nav{display:flex;gap:8px;margin-left:auto}
-    button, .btn{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
-    .btn.secondary{background:white;color:var(--accent);border:1px solid rgba(31,111,235,0.12)}
-    .layout{display:grid;grid-template-columns:280px 1fr;gap:18px}
-    .card{background:var(--card);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
-    .category-list{display:flex;flex-direction:column;gap:6px}
-    .cat{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;color:#0f1724;text-decoration:none}
-    .cat:hover{background:rgba(31,111,235,0.05)}
-    .cat .count{margin-left:auto;font-size:13px;color:var(--muted)}
-    .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-    .search{flex:1;display:flex}
-    .search input{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef}
-    .threads{display:flex;flex-direction:column;gap:10px}
-    .thread{display:flex;gap:12px;padding:10px;border-radius:10px;align-items:center}
-    .thread:hover{background:rgba(15,23,36,0.02)}
-    .avatar{width:44px;height:44px;border-radius:10px;background:#eef3ff;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef8;background:linear-gradient(180deg,#071018 0%, #0b0d10 100%);}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1200px;margin:26px auto;padding:18px;display:grid;gap:18px}
+    header{display:flex;align-items:center;gap:16px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    .logo {display:flex;align-items:center;gap:12px}
+    .logo .mark{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#061018}
+    .logo h1{margin:0;font-size:18px;letter-spacing:0.2px}
+    .logo p{margin:0;font-size:12px;color:var(--muted)}
+    nav{margin-left:auto;display:flex;gap:8px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:#e6eef8;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;color:#021224}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:18px}
+    /* Sidebar */
+    aside.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;padding:14px}
+    .cat-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+    .cat{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .cat:hover{background:var(--glass)}
+    .search input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+    /* Main */
+    main .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:14px;border-radius:12px}
+    .controls{display:flex;align-items:center;gap:12px}
+    .threads{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .thread{display:flex;gap:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);align-items:center;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+    .thread:hover{transform:translateY(-2px);transition:transform .12s}
+    .avatar{width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:grid;place-items:center;font-weight:800;color:var(--accent)}
     .meta{display:flex;flex-direction:column}
-    .meta .title{font-weight:600}
-    .meta .subtitle{font-size:13px;color:var(--muted)}
-    .right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-    .pager{display:flex;gap:8px;align-items:center;margin-top:12px}
-    form .field{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
-    textarea, input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef}
-    .thread-view{display:flex;flex-direction:column;gap:12px}
-    .post{background:#fbfdff;border-radius:10px;padding:12px;border:1px solid #eef3ff}
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-    @media (max-width:900px){ .layout{grid-template-columns:1fr} .cat .count{display:none} nav{display:none} }
+    .meta .title{font-weight:700}
+    .meta .excerpt{color:var(--muted);font-size:13px;margin-top:6px}
+    .right{margin-left:auto;text-align:right}
+    .badge{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:13px}
+    /* Thread view */
+    #thread-area{margin-top:14px;display:none}
+    .post{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    textarea,input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    footer{color:var(--muted);text-align:center;margin-top:12px;font-size:13px}
+    @media (max-width:900px){ .layout{grid-template-columns:1fr} aside{order:2} main{order:1} nav{display:none} .avatar{width:44px;height:44px} }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">
-        <h1>Foro Informativo</h1>
-        <p>Espacio para preguntas y discusiones</p>
+      <div class="logo">
+        <div class="mark">BSC</div>
+        <div>
+          <h1>BlackStreamCL Forum</h1>
+          <p>Foro informativo — réplica demo</p>
+        </div>
       </div>
       <nav>
-        <button id="btn-new" class="btn">Crear Hilo</button>
-        <button id="btn-reset" class="btn secondary">Restaurar demo</button>
+        <button class="btn primary" id="btn-new">Crear Hilo</button>
+        <button class="btn" id="btn-reset">Restaurar</button>
       </nav>
     </header>
 
     <div class="layout">
       <!-- SIDEBAR -->
       <aside class="card">
-        <h3>Categorías</h3>
-        <div class="category-list" id="category-list"></div>
-        <hr style="margin:12px 0;border:none;border-top:1px solid #eef1f6" />
-        <div>
-          <h4>Buscar</h4>
-          <div class="search">
-            <input id="search-input" placeholder="Buscar hilos por título o contenido..." />
-          </div>
-          <div style="margin-top:10px;display:flex;gap:8px">
-            <select id="filter-category">
-              <option value="">Todas las categorías</option>
-            </select>
-            <select id="sort-by">
-              <option value="recent">Más recientes</option>
-              <option value="replies">Más respuestas</option>
-            </select>
-          </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Categorías</strong>
+          <span class="badge" id="total-threads">0</span>
+        </div>
+
+        <div class="search" style="margin-top:12px">
+          <input id="search" placeholder="Buscar hilos..." />
+        </div>
+
+        <div class="cat-list" id="categories">
+          <!-- populated -->
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
+
+        <div style="display:flex;gap:8px">
+          <select id="filter-cat" style="flex:1;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:inherit">
+            <option value="">Todas</option>
+          </select>
+          <select id="sort-by" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:inherit">
+            <option value="recent">Recientes</option>
+            <option value="replies">Más respuestas</option>
+          </select>
         </div>
       </aside>
 
@@ -85,317 +104,238 @@
       <main>
         <div class="card">
           <div class="controls">
-            <h3 style="margin:0" id="main-title">Hilos recientes</h3>
-            <div style="margin-left:auto" id="selected-category-badge"></div>
+            <h3 id="main-title">Hilos</h3>
+            <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+              <span class="badge" id="selected-cat" style="display:none"></span>
+              <div style="color:var(--muted);font-size:13px" id="results-info"></div>
+            </div>
           </div>
 
-          <div id="threads-container" class="threads"></div>
+          <div class="threads" id="threads-list"></div>
 
-          <div class="pager" id="pager"></div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+            <button class="btn" id="prev-page">‹</button>
+            <div style="align-self:center;color:var(--muted)" id="page-info">1/1</div>
+            <button class="btn" id="next-page">›</button>
+          </div>
         </div>
 
-        <div id="thread-area" class="card" style="margin-top:14px;display:none">
-          <!-- thread view populated dynamically -->
+        <div id="thread-area" class="card">
+          <!-- thread content injected here -->
         </div>
 
-        <!-- CREATE THREAD FORM (hidden modal-like) -->
-        <div id="create-area" class="card" style="margin-top:14px;display:none">
-          <h3>Crear nuevo hilo</h3>
-          <form id="create-form">
-            <div class="field">
-              <label>Título</label>
-              <input type="text" id="new-title" required maxlength="150" />
-            </div>
-            <div class="field">
-              <label>Categoría</label>
-              <select id="new-category"></select>
-            </div>
-            <div class="field">
-              <label>Contenido</label>
-              <textarea id="new-content" rows="6" required></textarea>
-            </div>
-            <div style="display:flex;gap:8px">
-              <input id="new-author" placeholder="Tu nombre (opcional)" />
-              <input id="new-email" placeholder="Email (opcional)" />
-            </div>
-            <div style="margin-top:10px;display:flex;gap:8px">
-              <button class="btn" type="submit">Publicar hilo</button>
-              <button id="cancel-create" class="btn secondary" type="button">Cancelar</button>
-            </div>
-          </form>
-        </div>
-
-        <footer>
-          Demo local • Para producción: usar API + base de datos. Ver instrucciones debajo del código.
-        </footer>
+        <footer>Réplica demo — No es la web real; para producción usar assets / API reales.</footer>
       </main>
     </div>
   </div>
 
   <script>
-    /***********************
-     * Foro Informativo - Demo (localStorage)
-     * Features:
-     * - Categorías, hilos, posts
-     * - Crear hilo, responder
-     * - Búsqueda, paginación y orden
-     * - LocalStorage como persistencia local
-     *
-     * En producción reemplazar storage con llamadas a API.
-     ************************/
-
-    // ---------- Utils ----------
-    const uid = () => Math.random().toString(36).slice(2,9);
-    const now = () => new Date().toISOString();
-
-    // ---------- Demo data ----------
+    // Simple demo state (dark-style forum). Guarda en localStorage.
     const DEMO = {
       categories: [
-        { id: 'cat-general', name: 'General' },
-        { id: 'cat-tech', name: 'Tecnología' },
-        { id: 'cat-health', name: 'Salud' },
-        { id: 'cat-travel', name: 'Viajes' },
+        {id:'gen',name:'General'},
+        {id:'tech',name:'Tecnología'},
+        {id:'ann',name:'Anuncios'},
+        {id:'help',name:'Ayuda'}
       ],
       threads: [
-        {
-          id: 't1', title: 'Bienvenida al foro', category: 'cat-general',
-          author: 'Admin', createdAt: '2025-11-01T10:00:00Z',
-          content: 'Presentate y cuenta de qué te gustaría hablar aquí.',
-          replies: [{id:'r1',author:'Maria',createdAt:'2025-11-02T12:00:00Z',content:'Hola! soy Maria.'}]
-        },
-        {
-          id: 't2', title: '¿Qué laptop comprar en 2025?', category: 'cat-tech',
-          author: 'Pablo', createdAt: '2025-11-10T09:30:00Z',
-          content: 'Busco una laptop para programación y algo de gaming.',
-          replies: []
-        },
-        {
-          id: 't3', title: 'Consejos para viajar barato', category: 'cat-travel',
-          author: 'Claudia', createdAt: '2025-10-20T16:00:00Z',
-          content: '¿Alguien tiene tips para encontrar vuelos económicos?',
-          replies: [{id:'r2',author:'Juan',createdAt:'2025-10-21T08:00:00Z',content:'Usa alertas y viaja entre semana.'}]
-        }
+        {id:'t1',title:'Bienvenidos a BlackStreamCL',category:'ann',author:'Admin',createdAt:'2025-11-01T10:00:00Z',content:'Hilo oficial de bienvenida. Lee las reglas.',replies:[{id:'r1',author:'User1',createdAt:'2025-11-02T12:00:00Z',content:'Gracias!'}]},
+        {id:'t2',title:'¿Qué GPU recomiendan?',category:'tech',author:'Pedrox',createdAt:'2025-11-10T09:30:00Z',content:'Estoy armando un pc para streaming y gaming.',replies:[]},
+        {id:'t3',title:'Reglas del foro',category:'ann',author:'Mod',createdAt:'2025-10-20T08:00:00Z',content:'Lee antes de postear.',replies:[]}
       ]
     };
 
-    // ---------- Storage layer ----------
-    const STORAGE_KEY = 'foro_informativo_v1';
+    const STORAGE_KEY = 'bscl_demo_v1';
     function loadState(){
       const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO));
-        return structuredClone(DEMO);
-      }
-      try { return JSON.parse(raw); } catch(e){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO)); return structuredClone(DEMO); }
+      if(!raw){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO)); return structuredClone(DEMO); }
+      try{ return JSON.parse(raw); }catch(e){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO)); return structuredClone(DEMO); }
     }
-    function saveState(state){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
 
-    // ---------- App State ----------
     let state = loadState();
-    let pageSize = 6;
-    let currentPage = 1;
-    let selectedCategory = '';
-    let searchQ = '';
-    let sortBy = 'recent';
+    let page = 1, pageSize = 6;
+    let selectedCategory = '', searchQ = '', sortBy = 'recent';
 
-    // ---------- DOM references ----------
-    const categoryList = document.getElementById('category-list');
-    const filterCategory = document.getElementById('filter-category');
-    const threadsContainer = document.getElementById('threads-container');
-    const pager = document.getElementById('pager');
-    const searchInput = document.getElementById('search-input');
+    // DOM
+    const categoriesEl = document.getElementById('categories');
+    const threadsList = document.getElementById('threads-list');
+    const totalThreads = document.getElementById('total-threads');
+    const searchInput = document.getElementById('search');
+    const filterCat = document.getElementById('filter-cat');
     const sortSelect = document.getElementById('sort-by');
-    const selectedBadge = document.getElementById('selected-category-badge');
+    const selectedBadge = document.getElementById('selected-cat');
+    const resultsInfo = document.getElementById('results-info');
     const mainTitle = document.getElementById('main-title');
-
-    const createArea = document.getElementById('create-area');
-    const createForm = document.getElementById('create-form');
+    const threadArea = document.getElementById('thread-area');
+    const pageInfo = document.getElementById('page-info');
+    const prevBtn = document.getElementById('prev-page');
+    const nextBtn = document.getElementById('next-page');
     const btnNew = document.getElementById('btn-new');
     const btnReset = document.getElementById('btn-reset');
-    const cancelCreate = document.getElementById('cancel-create');
 
-    // ---------- Rendering ----------
+    // Render helpers
+    function getCategoryName(id){ const c = state.categories.find(x=>x.id===id); return c?c.name:'Sin categoría' }
+
     function renderCategories(){
-      categoryList.innerHTML = '';
-      filterCategory.innerHTML = '<option value="">Todas las categorías</option>';
+      categoriesEl.innerHTML = '';
+      filterCat.innerHTML = '<option value="">Todas</option>';
       state.categories.forEach(cat=>{
-        const threadsCount = state.threads.filter(t=>t.category===cat.id).length;
-        const a = document.createElement('a'); a.href='#'; a.className='cat'; a.innerHTML = `<span style="font-weight:600">${cat.name}</span> <span class="count">${threadsCount}</span>`;
-        a.onclick = (e)=>{ e.preventDefault(); selectedCategory = cat.id; currentPage = 1; render(); };
-        categoryList.appendChild(a);
+        const div = document.createElement('div'); div.className='cat';
+        div.innerHTML = `<div style="font-weight:700">${cat.name}</div><div style="margin-left:auto;color:var(--muted)">${state.threads.filter(t=>t.category===cat.id).length}</div>`;
+        div.onclick = ()=>{ selectedCategory = cat.id; page = 1; render(); };
+        categoriesEl.appendChild(div);
 
-        const opt = document.createElement('option'); opt.value = cat.id; opt.textContent = cat.name;
-        filterCategory.appendChild(opt);
+        const opt = document.createElement('option'); opt.value = cat.id; opt.textContent = cat.name; filterCat.appendChild(opt);
       });
-
-      // "Todas" link
-      const all = document.createElement('a'); all.href='#'; all.className='cat'; all.children; all.innerHTML = '<span style="font-weight:600">Ver todos</span>';
-      all.onclick = (e)=>{ e.preventDefault(); selectedCategory = ''; currentPage =1; render(); };
-      categoryList.prepend(all);
     }
 
     function renderThreads(){
-      // filter & search
       let list = state.threads.slice();
       if(selectedCategory) list = list.filter(t=>t.category===selectedCategory);
       if(searchQ) {
         const q = searchQ.toLowerCase();
-        list = list.filter(t => (t.title+t.content+(t.author||'')).toLowerCase().includes(q) || (t.replies||[]).some(r=> (r.content + r.author).toLowerCase().includes(q)));
+        list = list.filter(t => (t.title+t.content+(t.author||'')).toLowerCase().includes(q));
       }
-      // sort
-      if(sortBy==='recent') list.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
-      else if(sortBy==='replies') list.sort((a,b)=> (b.replies?.length||0) - (a.replies?.length||0));
+      if(sortBy==='recent') list.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+      else list.sort((a,b)=> (b.replies?.length||0)-(a.replies?.length||0));
 
-      // pagination
       const total = list.length;
       const pages = Math.max(1, Math.ceil(total/pageSize));
-      if(currentPage>pages) currentPage = pages;
-      const start = (currentPage-1)*pageSize;
-      const pageItems = list.slice(start, start+pageSize);
+      if(page>pages) page = pages;
+      const start = (page-1)*pageSize;
+      const items = list.slice(start, start+pageSize);
 
-      // render
-      threadsContainer.innerHTML = '';
-      if(pageItems.length===0){
-        threadsContainer.innerHTML = '<div style="color:var(--muted);padding:12px;border-radius:8px">No hay hilos que coincidan.</div>';
-      } else {
-        pageItems.forEach(t=>{
-          const div = document.createElement('div'); div.className='thread';
-          const initials = (t.author||'U').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
-          div.innerHTML = `
-            <div class="avatar">${initials}</div>
-            <div class="meta">
-              <div class="title">${escapeHtml(t.title)}</div>
-              <div class="subtitle">${escapeHtml(t.content.slice(0,120))} ${t.content.length>120? '…':''}</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:6px">${getCategoryName(t.category)} • ${timeAgo(new Date(t.createdAt))} • por ${escapeHtml(t.author||'Anónimo')}</div>
-            </div>
-            <div class="right">
-              <div style="font-weight:700">${t.replies?.length||0}</div>
-              <div style="font-size:12px;color:var(--muted)">respuestas</div>
-            </div>
-          `;
-          div.onclick = ()=> openThread(t.id);
-          threadsContainer.appendChild(div);
-        });
-      }
+      threadsList.innerHTML = '';
+      if(items.length===0) threadsList.innerHTML = `<div style="color:var(--muted);padding:12px;border-radius:8px">No hay hilos.</div>`;
+      else items.forEach(t=>{
+        const div = document.createElement('div'); div.className='thread';
+        const initials = (t.author||'U').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
+        div.innerHTML = `
+          <div class="avatar">${initials}</div>
+          <div class="meta">
+            <div class="title">${escapeHtml(t.title)}</div>
+            <div class="excerpt">${escapeHtml(t.content.slice(0,140))}${t.content.length>140?'…':''}</div>
+            <div style="color:var(--muted);font-size:12px;margin-top:8px">${getCategoryName(t.category)} • ${timeAgo(new Date(t.createdAt))} • por ${escapeHtml(t.author||'Anónimo')}</div>
+          </div>
+          <div class="right">
+            <div style="font-weight:700">${t.replies?.length||0}</div>
+            <div style="color:var(--muted);font-size:12px">respuestas</div>
+          </div>
+        `;
+        div.onclick = ()=> openThread(t.id);
+        threadsList.appendChild(div);
+      });
 
-      renderPager(pages, total);
-      renderSelectedBadge();
-      mainTitle.textContent = selectedCategory ? `Hilos: ${getCategoryName(selectedCategory)}` : 'Hilos recientes';
+      totalThreads.textContent = total;
+      resultsInfo.textContent = `${total} resultados`;
+      selectedBadge.style.display = selectedCategory ? 'inline-block' : 'none';
+      if(selectedCategory) selectedBadge.textContent = getCategoryName(selectedCategory);
+
+      pageInfo.textContent = `${page} / ${pages}`;
     }
 
-    function renderPager(pages, total){
-      pager.innerHTML = '';
-      const info = document.createElement('div'); info.style.color='var(--muted)'; info.textContent = `${total} resultados`;
-      pager.appendChild(info);
-
-      const gaps = document.createElement('div'); gaps.style.marginLeft='auto'; gaps.style.display='flex'; gaps.style.gap='6px';
-      // prev
-      const prev = document.createElement('button'); prev.className='btn secondary'; prev.textContent='‹'; prev.onclick = ()=>{ if(currentPage>1){ currentPage--; renderThreads(); } };
-      // next
-      const next = document.createElement('button'); next.className='btn secondary'; next.textContent='›'; next.onclick = ()=>{ if(currentPage<pages){ currentPage++; renderThreads(); } };
-      const pinfo = document.createElement('div'); pinfo.style.alignSelf='center'; pinfo.style.color='var(--muted)'; pinfo.textContent = `Página ${currentPage} / ${pages}`;
-      gaps.appendChild(prev); gaps.appendChild(pinfo); gaps.appendChild(next);
-      pager.appendChild(gaps);
-    }
-
-    function renderSelectedBadge(){
-      if(selectedCategory){
-        selectedBadge.innerHTML = `<span style="background:#eef7ff;padding:6px 10px;border-radius:999px;border:1px solid rgba(31,111,235,0.06)">${getCategoryName(selectedCategory)} <a href="#" id="clear-cat" style="margin-left:8px;color:var(--muted)">✕</a></span>`;
-        document.getElementById('clear-cat').onclick = (e)=>{ e.preventDefault(); selectedCategory=''; currentPage=1; render(); };
-      } else selectedBadge.innerHTML = '';
-    }
-
-    function getCategoryName(id){ const c = state.categories.find(x=>x.id===id); return c?c.name:'Sin categoría'; }
-
-    // ---------- Thread view ----------
-    function openThread(threadId){
-      const t = state.threads.find(x=>x.id===threadId);
+    // Thread view
+    function openThread(id){
+      const t = state.threads.find(x=>x.id===id);
       if(!t) return alert('Hilo no encontrado');
-      const area = document.getElementById('thread-area');
-      area.style.display = 'block';
-      area.innerHTML = '';
-      const container = document.createElement('div'); container.className='thread-view';
-      container.innerHTML = `
+      threadArea.style.display = 'block';
+      threadArea.innerHTML = `
         <div style="display:flex;gap:12px;align-items:center">
-          <div class="avatar" style="width:52px;height:52px;border-radius:12px">${(t.author||'U').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase()}</div>
+          <div class="avatar" style="width:64px;height:64px;border-radius:12px">${(t.author||'U').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase()}</div>
           <div>
-            <div style="font-size:18px;font-weight:700">${escapeHtml(t.title)}</div>
+            <div style="font-size:20px;font-weight:800">${escapeHtml(t.title)}</div>
             <div style="color:var(--muted);font-size:13px">${getCategoryName(t.category)} • ${timeAgo(new Date(t.createdAt))} • por ${escapeHtml(t.author||'Anónimo')}</div>
           </div>
         </div>
-        <div class="post" style="white-space:pre-wrap">${escapeHtml(t.content)}</div>
-        <div><h4>${(t.replies?.length||0)} respuestas</h4></div>
+        <div class="post" style="margin-top:12px;white-space:pre-wrap">${escapeHtml(t.content)}</div>
+        <div style="margin-top:12px"><h4>${(t.replies?.length||0)} respuestas</h4></div>
       `;
-      // replies
+
       const replies = document.createElement('div'); replies.style.display='flex'; replies.style.flexDirection='column'; replies.style.gap='10px';
       (t.replies||[]).forEach(r=>{
         const rdiv = document.createElement('div'); rdiv.className='post';
-        rdiv.innerHTML = `<div style="font-weight:600">${escapeHtml(r.author||'Anónimo')} <span style="font-weight:400;color:var(--muted);font-size:12px"> • ${timeAgo(new Date(r.createdAt))}</span></div><div style="margin-top:6px;white-space:pre-wrap">${escapeHtml(r.content)}</div>`;
+        rdiv.innerHTML = `<div style="font-weight:700">${escapeHtml(r.author||'Anónimo')} <span style="font-weight:400;color:var(--muted);font-size:12px">• ${timeAgo(new Date(r.createdAt))}</span></div><div style="margin-top:8px;white-space:pre-wrap">${escapeHtml(r.content)}</div>`;
         replies.appendChild(rdiv);
       });
-      container.appendChild(replies);
+      threadArea.appendChild(replies);
 
-      // reply form
-      const replyForm = document.createElement('div');
+      const replyForm = document.createElement('div'); replyForm.style.marginTop='12px';
       replyForm.innerHTML = `
         <h4>Responder</h4>
         <form id="reply-form">
-          <div class="field"><input id="reply-author" placeholder="Tu nombre (opcional)" /></div>
-          <div class="field"><textarea id="reply-content" rows="4" required></textarea></div>
-          <div style="display:flex;gap:8px"><button class="btn" type="submit">Publicar respuesta</button> <button id="close-thread" class="btn secondary" type="button">Cerrar</button></div>
+          <div style="margin-bottom:8px"><input id="reply-author" placeholder="Tu nombre (opcional)"></div>
+          <div style="margin-bottom:8px"><textarea id="reply-content" rows="4" required></textarea></div>
+          <div style="display:flex;gap:8px"><button class="btn primary" type="submit">Publicar</button><button class="btn" id="close-thread" type="button">Cerrar</button></div>
         </form>
       `;
-      container.appendChild(replyForm);
-      area.appendChild(container);
+      threadArea.appendChild(replyForm);
 
-      // handlers
       document.getElementById('reply-form').onsubmit = function(e){
         e.preventDefault();
         const author = document.getElementById('reply-author').value.trim() || 'Anónimo';
         const content = document.getElementById('reply-content').value.trim();
-        if(!content) return alert('Escribe una respuesta.');
-        const reply = { id: uid(), author, content, createdAt: now() };
+        if(!content) return alert('Escribe algo.');
+        const reply = { id: cryptoRandomId(), author, content, createdAt: new Date().toISOString() };
         t.replies = t.replies || [];
         t.replies.push(reply);
         saveState(state);
-        openThread(threadId); // re-render
-        render(); // update lists
+        openThread(id);
+        renderThreads();
       };
-      document.getElementById('close-thread').onclick = ()=>{ area.style.display='none'; };
+      document.getElementById('close-thread').onclick = ()=>{ threadArea.style.display='none'; };
+      threadArea.scrollIntoView({behavior:'smooth'});
     }
 
-    // ---------- Create thread ----------
-    btnNew.onclick = ()=>{ createArea.style.display='block'; createArea.scrollIntoView({behavior:'smooth'}); populateNewCategory(); };
-    cancelCreate.onclick = ()=>{ createArea.style.display='none'; };
-    createForm.onsubmit = function(e){
-      e.preventDefault();
-      const title = document.getElementById('new-title').value.trim();
-      const category = document.getElementById('new-category').value || state.categories[0].id;
-      const content = document.getElementById('new-content').value.trim();
-      const author = document.getElementById('new-author').value.trim() || 'Anónimo';
-      if(!title || !content) return alert('Completa título y contenido.');
-      const t = { id: uid(), title, category, content, author, createdAt: now(), replies: [] };
-      state.threads.unshift(t);
-      saveState(state);
-      createForm.reset();
-      createArea.style.display='none';
-      selectedCategory = category;
-      currentPage = 1;
-      render();
-      openThread(t.id);
+    // Create thread (modal-like behaviour)
+    btnNew.onclick = ()=>{
+      // build quick create area inline
+      threadArea.style.display = 'block';
+      threadArea.innerHTML = `
+        <h3>Crear nuevo hilo</h3>
+        <form id="create-form">
+          <div style="margin-bottom:8px"><input id="new-title" placeholder="Título del hilo" required></div>
+          <div style="margin-bottom:8px">
+            <select id="new-cat">${state.categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select>
+          </div>
+          <div style="margin-bottom:8px"><textarea id="new-content" rows="6" required></textarea></div>
+          <div style="display:flex;gap:8px"><input id="new-author" placeholder="Tu nombre (opcional)"><input id="new-email" placeholder="Email (opcional)"></div>
+          <div style="margin-top:10px;display:flex;gap:8px"><button class="btn primary" type="submit">Publicar</button><button class="btn" id="cancel-create" type="button">Cancelar</button></div>
+        </form>
+      `;
+      document.getElementById('cancel-create').onclick = ()=>{ threadArea.style.display='none'; };
+      document.getElementById('create-form').onsubmit = function(e){
+        e.preventDefault();
+        const title = document.getElementById('new-title').value.trim();
+        const category = document.getElementById('new-cat').value;
+        const content = document.getElementById('new-content').value.trim();
+        const author = document.getElementById('new-author').value.trim() || 'Anónimo';
+        if(!title||!content) return alert('Completa título y contenido.');
+        const t = { id: cryptoRandomId(), title, category, content, author, createdAt: new Date().toISOString(), replies: [] };
+        state.threads.unshift(t);
+        saveState(state);
+        render();
+        openThread(t.id);
+      };
+      threadArea.scrollIntoView({behavior:'smooth'});
     };
 
-    function populateNewCategory(){
-      const sel = document.getElementById('new-category'); sel.innerHTML = '';
-      state.categories.forEach(c=>{ const o = document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
-    }
+    btnReset.onclick = ()=>{
+      if(!confirm('Restaurar datos de demo eliminará tus cambios locales. ¿Continuar?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state = loadState();
+      render();
+      alert('Demo restaurado.');
+    };
 
-    // ---------- Search / filters ----------
-    searchInput.oninput = (e)=>{ searchQ = e.target.value.trim(); currentPage=1; render(); };
-    filterCategory.onchange = (e)=>{ selectedCategory = e.target.value; currentPage=1; render(); };
+    // Search / filters
+    searchInput.oninput = (e)=>{ searchQ = e.target.value.trim(); page = 1; render(); };
+    filterCat.onchange = (e)=>{ selectedCategory = e.target.value; page = 1; render(); };
     sortSelect.onchange = (e)=>{ sortBy = e.target.value; render(); };
+    prevBtn.onclick = ()=>{ if(page>1){ page--; render(); } };
+    nextBtn.onclick = ()=>{ page++; render(); };
 
-    // ---------- Helpers ----------
+    // Utilities
     function escapeHtml(s){ if(!s) return ''; return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
     function timeAgo(d){
       const diff = (Date.now() - d.getTime())/1000;
@@ -406,42 +346,15 @@
       if(days < 30) return `${days}d`;
       return d.toLocaleDateString();
     }
+    function cryptoRandomId(){ return Math.random().toString(36).slice(2,9); }
 
-    // ---------- Reset demo ----------
-    btnReset.onclick = ()=>{
-      if(!confirm('Restaurar datos de demo eliminará tus cambios locales. ¿Continuar?')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      state = loadState();
-      render();
-      alert('Datos de demo restaurados.');
-    };
-
-    // ---------- Initial render ----------
-    function render(){
-      renderCategories();
-      renderThreads();
-      populateNewCategory();
-    }
+    // Initial render
+    function render(){ renderCategories(); renderThreads(); }
     render();
 
-    // ---------- Expose for debugging ----------
-    window._foroState = state;
-
-    // ---------- Nota: funciones para integrar con backend ----------
-    // En producción reemplazar las operaciones de "state" con fetch() a tu API:
-    // - GET /api/categories
-    // - GET /api/threads?category=cat-tech&page=1&pageSize=10&search=...
-    // - GET /api/threads/:id
-    // - POST /api/threads {title,category,content,author}
-    // - POST /api/threads/:id/replies {author,content}
-    // A continuación, un ejemplo de cómo sería una llamada fetch para crear hilo:
-    /*
-      async function createThreadRemote(payload){
-        const res = await fetch('/api/threads', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-        if(!res.ok) throw new Error('Error al crear hilo');
-        return res.json();
-      }
-    */
+    // Expose state for debugging
+    window._forumState = state;
   </script>
 </body>
 </html>
+
