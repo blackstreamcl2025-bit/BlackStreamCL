@@ -94,6 +94,45 @@
       text-decoration:none;
     }
 
+
+    /* Secciones desplegables */
+    section {
+      margin-top:40px;
+      padding:20px;
+      background:rgba(255,255,255,0.03);
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    section h2 {
+      font-size:22px;
+      margin-top:0;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    details {
+      margin-top:15px;
+      background:#111318;
+      padding:14px;
+      border-radius:10px;
+      border:1px solid #222;
+    }
+
+    summary {
+      cursor:pointer;
+      font-weight:700;
+      font-size:15px;
+      margin-bottom:6px;
+    }
+
+    details p, details h3, details h4 {
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55em;
+    }
+
     /* catálogo */
     .catalogo-title {
       text-align:center;
@@ -157,40 +196,126 @@
       <div class="card">
         <h3>Información importante</h3>
         <p>Todo lo que debes saber antes de comprar.</p>
-        <a class="link" href="#">Abrir</a>
+        <a class="link" href="#info">Abrir</a>
       </div>
 
       <div class="card">
         <h3>Cómo comprar</h3>
         <p>Proceso completo y pasos para comprar.</p>
-        <a class="link" href="#">Abrir</a>
+        <a class="link" href="#comprar">Abrir</a>
       </div>
 
       <div class="card">
         <h3>Métodos de pago</h3>
         <p>Formas de pago, garantías y proceso.</p>
-        <a class="link" href="#">Abrir</a>
+        <a class="link" href="#pago">Abrir</a>
       </div>
 
       <div class="card">
         <h3>Términos de compra</h3>
         <p>Reglas y condiciones importantes.</p>
-        <a class="link" href="#">Abrir</a>
+        <a class="link" href="#terminos">Abrir</a>
       </div>
 
       <div class="card">
         <h3>Soporte 24/7</h3>
         <p>Atención y ayuda en todo momento.</p>
-        <a class="link" href="#">Abrir</a>
+        <a class="link" href="#soporte">Abrir</a>
       </div>
 
     </div>
+
+
+    <!-- Información Importante -->
+    <section id="info">
+      <h2>Información importante</h2>
+
+      <details open>
+        <summary>Ver detalles</summary>
+        <p>
+          Somos transparentes y queremos informarte lo que te brindamos.
+          Si vas a molestar o faltar el respeto mejor no compres, trabajamos con personas educadas.
+          Estás comprando algo que no es original; lo original se compra en su página oficial.
+          Si no hay stock, marcamos saldo para que el cliente pida otro servicio.
+          Entre más estabilidad, más costosa será la cuenta.
+          No hay reembolsos de dinero en ningún concepto.
+          Siempre serás bienvenido a BlackStreamCL.
+        </p>
+      </details>
+    </section>
+
+
+    <!-- Cómo comprar -->
+    <section id="comprar">
+      <h2>Cómo comprar</h2>
+
+      <details>
+        <summary>Ver detalles</summary>
+        <p>
+          El proceso es simple: preguntas disponibilidad, seleccionas servicio, envías comprobante y recibes tu cuenta.
+          La entrega es inmediata, aunque en momentos de alta demanda puede tardar un poco más.
+          Cumplimos con el tiempo estimado de cada servicio según el tipo de cuenta.
+        </p>
+      </details>
+    </section>
+
+
+    <!-- Métodos de pago -->
+    <section id="pago">
+      <h2>Métodos de pago</h2>
+
+      <details>
+        <summary>Ver detalles</summary>
+        <p>
+          Los datos bancarios se entregan junto con la lista oficial de precios según el servicio seleccionado.
+          Guardamos registro del saldo a favor si no hubiese stock disponible.
+        </p>
+      </details>
+    </section>
+
+
+    <!-- Términos de compra -->
+    <section id="terminos">
+      <h2>Términos de compra</h2>
+
+      <details>
+        <summary>Ver detalles</summary>
+
+        <h3>Ofrecemos 2 tipos de cuentas</h3>
+
+        <h4>CUENTAS AUTOPAGABLES</h4>
+        <p>
+          No son métodos genéricos y no sufrimos caídas masivas.
+          Las cuentas dañadas se reponen con una nueva.
+          Algunas tienen dueño que las autopaga.
+          No se pueden editar perfiles ni configuración interna.
+          Entregamos garantía incluso si faltan pocos días.
+          En casos extremos cambiamos servicio otorgando más tiempo o descuentos.
+        </p>
+
+        <h4>CUENTAS PERSONALES</h4>
+        <p>
+          Usamos métodos estables para evitar caídas masivas.
+          Las cuentas dañadas se reparan o se reemplazan.
+          Son totalmente editables internamente, excepto correo y clave.
+          Cumplimos con el tiempo estimado del servicio adquirido.
+        </p>
+
+        <h3>Puntos importantes</h3>
+        <p>
+          Las cuentas son limitadas; pregunta disponibilidad.
+          No hay reembolsos bajo ningún concepto.
+          Si no acepta los términos, le deseamos un buen día.
+          Si los acepta: Bienvenido a nuestra comunidad.
+        </p>
+      </details>
+    </section>
+
 
     <!-- Catálogo -->
     <h2 id="catalogo" class="catalogo-title">Catálogo de Servicios</h2>
 
     <div class="catalogo-grid">
-
       <div class="servicio">Netflix</div>
       <div class="servicio">Disney+</div>
       <div class="servicio">Amazon Prime Video</div>
@@ -209,8 +334,8 @@
       <div class="servicio">Canva Pro</div>
       <div class="servicio">CapCut PRO</div>
       <div class="servicio">Pornhub Premium</div>
-
     </div>
+
 
     <footer>
       © BlackStreamCL — Comunidad oficial
