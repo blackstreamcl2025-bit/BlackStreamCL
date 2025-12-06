@@ -180,7 +180,7 @@
     display:inline-block;margin-top:14px;padding:9px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;
   }
 
-  /* catalog grid */
+  /* catalog grid (legacy) kept in case used elsewhere */
   .catalogo-title{
     margin-top:16px;margin-bottom:8px;text-align:center;font-weight:700;color:var(--accent-1);font-size:22px;
   }
@@ -198,6 +198,50 @@
   }
   .servicio:hover{transform:translateY(-6px);border-color: rgba(177,76,255,0.45)}
 
+  /* --- NEW: catálogo lista con logos + nombre al lado --- */
+  .catalogo-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-top:12px;
+  }
+
+  .catalogo-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    cursor: default;
+  }
+
+  .catalogo-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(8,6,15,0.45), 0 0 18px rgba(177,76,255,0.08);
+    border-color: rgba(177,76,255,0.28);
+  }
+
+  .catalogo-item img {
+    width:48px;
+    height:48px;
+    object-fit:contain;
+    display:block;
+    border-radius:8px;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+    background: transparent;
+  }
+
+  .catalogo-item .nombre {
+    color: #ffffff;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.2px;
+  }
+
   footer{margin-top:32px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:30px}
 
   /* responsive */
@@ -206,6 +250,7 @@
     .grid{grid-template-columns:1fr}
     h1{font-size:34px}
     .logo-inline{width:96px;height:96px}
+    .catalogo-lista { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
   }
 
 </style>
@@ -295,26 +340,102 @@
       <section id="sec-catalogo" class="section" aria-hidden="true">
         <h2>Catálogo de Servicios</h2>
         <p>Estos son los servicios que ofrecemos (sin precios):</p>
-        <div class="catalogo-grid" aria-label="Catálogo">
-          <div class="servicio">Netflix</div>
-          <div class="servicio">Disney+</div>
-          <div class="servicio">Amazon Prime Video</div>
-          <div class="servicio">Spotify</div>
-          <div class="servicio">HBO Max</div>
-          <div class="servicio">YouTube Premium</div>
-          <div class="servicio">Crunchyroll</div>
-          <div class="servicio">IPTV</div>
-          <div class="servicio">TNT Sports</div>
-          <div class="servicio">DirecTV Go</div>
-          <div class="servicio">VIX</div>
-          <div class="servicio">Apple TV+</div>
-          <div class="servicio">ChatGPT Plus</div>
-          <div class="servicio">WWE</div>
-          <div class="servicio">NBA League Pass</div>
-          <div class="servicio">Canva Pro</div>
-          <div class="servicio">CapCut PRO</div>
-          <div class="servicio">Pornhub Premium</div>
+
+        <!-- --- aquí va la lista con logo + nombre --- -->
+        <div class="catalogo-lista" aria-label="Catálogo con logos">
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix logo">
+            <span class="nombre">Netflix</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+ logo">
+            <span class="nombre">Disney+</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Prime Video logo">
+            <span class="nombre">Amazon Prime Video</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify logo">
+            <span class="nombre">Spotify</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg" alt="HBO Max logo">
+            <span class="nombre">HBO Max</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/YouTube_Logo_2017.svg" alt="YouTube logo">
+            <span class="nombre">YouTube Premium</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Crunchyroll_Logo.svg" alt="Crunchyroll logo">
+            <span class="nombre">Crunchyroll</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/5969/5969123.png" alt="IPTV icon">
+            <span class="nombre">IPTV</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/TNT_Logo_2016.svg" alt="TNT Sports logo">
+            <span class="nombre">TNT Sports</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/DirecTV_logo_2016.svg" alt="DirecTV Go logo">
+            <span class="nombre">DirecTV Go</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/VIX_logo.svg" alt="VIX logo">
+            <span class="nombre">VIX</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple TV logo">
+            <span class="nombre">Apple TV+</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT logo">
+            <span class="nombre">ChatGPT Plus</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/WWE_Logo.svg" alt="WWE logo">
+            <span class="nombre">WWE</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/en/1/10/NBA_logo.svg" alt="NBA logo">
+            <span class="nombre">NBA League Pass</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Canva_Logo.svg" alt="Canva logo">
+            <span class="nombre">Canva Pro</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://seeklogo.com/images/C/capcut-logo-CC7662B674-seeklogo.com.png" alt="CapCut Pro logo">
+            <span class="nombre">CapCut PRO</span>
+          </div>
+
+          <div class="catalogo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Pornhub-logo.svg" alt="Pornhub logo">
+            <span class="nombre">Pornhub Premium</span>
+          </div>
+
         </div>
+        <!-- --- fin catálogo --- -->
 
         <button class="close" onclick="closeSection('sec-catalogo')">Cerrar</button>
       </section>
@@ -501,8 +622,8 @@
   });
 </script>
 <!-- BOTÓN INSTAGRAM NEÓN (ESQUINA SUPERIOR IZQUIERDA) -->
-<a href="https://instagram.com/BlackStreamCL" target="_blank" class="insta-neon">
-  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+<a href="https://instagram.com/BlackStreamCL" target="_blank" class="insta-neon" aria-label="Ir a Instagram">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
 </a>
 
 <style>
