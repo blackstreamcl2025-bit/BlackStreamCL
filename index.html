@@ -1,209 +1,505 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BlackStreamCL - Foro Informativo</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BlackStreamCL - Foro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f1115;
-        color: #e5e5e5;
-        text-align: center;
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-    .logo {
-        width: 150px;
-        margin-top: 40px;
-        margin-bottom: 10px;
-    }
+  :root{
+    --bg:#05060a;
+    --card:#0f1317;
+    --muted:#9aa3ad;
+    --accent-1:#b14cff;
+    --accent-2:#ff4fb3;
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --radius:14px;
+    --maxWidth:1200px;
+  }
 
-    h1 {
-        font-size: 48px;
-        margin-top: 10px;
-        font-weight: 800;
-        color: #d94cff;
-    }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color:#e9eef6;
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
 
-    .subtitle {
-        margin-bottom: 50px;
-        font-size: 18px;
-        opacity: 0.7;
-    }
+  /* BACKGROUND LOGO (full page, blurred) */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image: url('logo.png'); /* <- sube tu logo con este nombre */
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: 60vmin; /* tamaño del logo en fondo */
+    opacity:0.06;
+    filter: blur(28px) saturate(1.1);
+    transform: scale(1.05);
+    z-index:0;
+    pointer-events:none;
+  }
+  /* dark overlay sobre el fondo para mejor contraste */
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: linear-gradient(180deg, rgba(4,6,10,0.7), rgba(6,8,12,0.85));
+    z-index:1;
+    pointer-events:none;
+  }
 
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-        gap: 25px;
-    }
+  .wrap{
+    position:relative;
+    z-index:2;
+    max-width:var(--maxWidth);
+    margin:36px auto;
+    padding:36px;
+  }
 
-    .card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        padding: 25px;
-        text-align: left;
-        transition: 0.2s;
-        cursor: pointer;
-    }
+  header{
+    text-align:center;
+    margin-bottom:28px;
+  }
+  .logo-inline{
+    width:120px;
+    height:120px;
+    display:inline-block;
+    background-image:url('logo.png');
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:contain;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+    border-radius:12px;
+  }
+  h1{
+    margin:18px 0 6px;
+    font-size:44px;
+    line-height:1;
+    letter-spacing:-0.5px;
+    font-weight:800;
+    color:var(--accent-1);
+    text-shadow: 0 6px 20px rgba(177,76,255,0.06);
+  }
+  .subtitle{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:26px;
+  }
 
-    .card:hover {
-        background: rgba(255,255,255,0.08);
-        transform: scale(1.02);
-    }
+  /* cards grid */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+    align-items:stretch;
+  }
 
-    .card-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: #d94cff;
-    }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.01));
+    border-radius:var(--radius);
+    padding:22px;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 10px 30px rgba(2,4,8,0.6);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    cursor:pointer;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
 
-    .card p {
-        font-size: 14px;
-        opacity: 0.7;
-    }
+  .card:hover{
+    transform: translateY(-6px);
+    border-color: rgba(177,76,255,0.5);
+    box-shadow: 0 18px 40px rgba(8,10,14,0.7), 0 0 40px rgba(177,76,255,0.03);
+  }
 
-    .section {
-        width: 90%;
-        max-width: 900px;
-        background: #16181d;
-        margin: 40px auto;
-        padding: 25px;
-        border-radius: 12px;
-        display: none;
-        text-align: left;
-        border: 1px solid rgba(255,255,255,0.1);
-    }
+  .card .head{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
 
-    .section h3 {
-        color: #d94cff;
-        font-size: 26px;
-    }
+  .icon{
+    width:42px;height:42px;border-radius:10px;
+    background: linear-gradient(135deg, rgba(177,76,255,0.12), rgba(255,79,179,0.06));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--accent-1);font-weight:700;font-size:18px;
+    border:1px solid rgba(177,76,255,0.06);
+  }
 
-    .close-btn {
-        background: #d94cff;
-        border: none;
-        padding: 10px 18px;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-top: 15px;
-    }
+  .card h3{
+    margin:0;font-size:16px;letter-spacing:0.2px;font-weight:800;color:#fff;
+  }
+  .card p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+
+  .card .arrow{align-self:flex-end;color:var(--muted);font-size:18px}
+
+  /* layout for sections */
+  .sections{
+    margin-top:34px;
+    display:grid;
+    gap:18px;
+  }
+
+  .section{
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,0.03);
+    display:none;
+  }
+
+  .section.active{display:block; animation:fadeIn .22s ease both}
+
+  @keyframes fadeIn{
+    from{opacity:0; transform: translateY(8px)}
+    to{opacity:1; transform: translateY(0)}
+  }
+
+  .section h2{
+    margin:0 0 8px 0;font-size:20px;color:var(--accent-1)
+  }
+  .section p, .section li{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.65;
+  }
+  .section ul{padding-left:18px;margin:10px 0}
+
+  .close{
+    display:inline-block;margin-top:14px;padding:9px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;
+  }
+
+  /* catalog grid */
+  .catalogo-title{
+    margin-top:16px;margin-bottom:8px;text-align:center;font-weight:700;color:var(--accent-1);font-size:22px;
+  }
+  .catalogo-grid{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap:14px;
+  }
+  .servicio{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border:1px solid rgba(255,255,255,0.03);
+    padding:16px;border-radius:12px;text-align:center;font-weight:700;color:#ffffff;font-size:14px;
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .servicio:hover{transform:translateY(-6px);border-color: rgba(177,76,255,0.45)}
+
+  footer{margin-top:32px;text-align:center;color:var(--muted);font-size:13px;padding-bottom:30px}
+
+  /* responsive */
+  @media (max-width:1120px){ .grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:720px){
+    .grid{grid-template-columns:1fr}
+    h1{font-size:34px}
+    .logo-inline{width:96px;height:96px}
+  }
+
 </style>
-
-<script>
-function openSection(id) {
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-    document.getElementById(id).style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-</script>
 </head>
-
 <body>
 
-<!-- LOGO -->
-<img src="logo.png" alt="BlackStreamCL Logo" class="logo">
+  <div class="wrap">
+    <header>
+      <div class="logo-inline" aria-hidden="true"></div>
+      <h1>BlackStreamCL</h1>
+      <div class="subtitle">Todo tu entretenimiento, en un solo lugar</div>
+    </header>
 
-<h1>BlackStreamCL</h1>
-<p class="subtitle">Todo tu entretenimiento, en un solo lugar</p>
+    <!-- CARDS -->
+    <div class="grid" role="list">
+      <div class="card" role="listitem" onclick="openSection('sec-catalogo')">
+        <div class="head">
+          <div class="icon">≡</div>
+          <div>
+            <h3>CATÁLOGO</h3>
+            <p>Todos los servicios de streaming disponibles.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
-<div class="container">
+      <div class="card" role="listitem" onclick="openSection('sec-info')">
+        <div class="head">
+          <div class="icon">i</div>
+          <div>
+            <h3>INFORMACIÓN IMPORTANTE</h3>
+            <p>Lee todo lo que necesitas saber sobre BlackStreamCL.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
 
-    <div class="card" onclick="openSection('catalogo')">
-        <div class="card-title">Catálogo</div>
-        <p>Todos los servicios de streaming disponibles</p>
+      <div class="card" role="listitem" onclick="openSection('sec-comprar')">
+        <div class="head">
+          <div class="icon">🛒</div>
+          <div>
+            <h3>CÓMO COMPRAR</h3>
+            <p>Proceso completo para realizar tu compra.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="card" role="listitem" onclick="openSection('sec-pago')">
+        <div class="head">
+          <div class="icon">💳</div>
+          <div>
+            <h3>MÉTODOS DE PAGO</h3>
+            <p>Información sobre pagos y garantías.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="card" role="listitem" onclick="openSection('sec-terminos')">
+        <div class="head">
+          <div class="icon">📄</div>
+          <div>
+            <h3>TÉRMINOS DE COMPRA</h3>
+            <p>Términos y condiciones de nuestros servicios.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+
+      <div class="card" role="listitem" onclick="openSection('sec-soporte')">
+        <div class="head">
+          <div class="icon">🎧</div>
+          <div>
+            <h3>SOPORTE 24/7</h3>
+            <p>Atención continua y asistencia en todo momento.</p>
+          </div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
     </div>
 
-    <div class="card" onclick="openSection('info')">
-        <div class="card-title">Información Importante</div>
-        <p>Todo lo que debes saber antes de comprar</p>
+    <!-- SECTIONS -->
+    <div class="sections">
+
+      <!-- CATALOGO -->
+      <section id="sec-catalogo" class="section" aria-hidden="true">
+        <h2>Catálogo de Servicios</h2>
+        <p>Estos son los servicios que ofrecemos (sin precios):</p>
+        <div class="catalogo-grid" aria-label="Catálogo">
+          <div class="servicio">Netflix</div>
+          <div class="servicio">Disney+</div>
+          <div class="servicio">Amazon Prime Video</div>
+          <div class="servicio">Spotify</div>
+          <div class="servicio">HBO Max</div>
+          <div class="servicio">YouTube Premium</div>
+          <div class="servicio">Crunchyroll</div>
+          <div class="servicio">IPTV</div>
+          <div class="servicio">TNT Sports</div>
+          <div class="servicio">DirecTV Go</div>
+          <div class="servicio">VIX</div>
+          <div class="servicio">Apple TV+</div>
+          <div class="servicio">ChatGPT Plus</div>
+          <div class="servicio">WWE</div>
+          <div class="servicio">NBA League Pass</div>
+          <div class="servicio">Canva Pro</div>
+          <div class="servicio">CapCut PRO</div>
+          <div class="servicio">Pornhub Premium</div>
+        </div>
+
+        <button class="close" onclick="closeSection('sec-catalogo')">Cerrar</button>
+      </section>
+
+      <!-- INFORMACION IMPORTANTE -->
+      <section id="sec-info" class="section" aria-hidden="true">
+        <h2>Información importante</h2>
+
+        <ol>
+          <li><strong>El punto más IMPORTANTE:</strong> es leer todo lo que escribimos; en 10 MINUTOS entenderán todo sobre NUESTRA TIENDA.</li>
+          <li><strong>Nuestras cuentas no son ORIGINALES</strong>, por eso su increíble costo.</li>
+          <li><strong>No somos una EMPRESA</strong>; somos un grupo de personas que se dedica a vender cuentas de streaming con RESPONSABILIDAD.</li>
+          <li><strong>Si quieres comprarnos, por favor PACIENCIA</strong>, tenemos muchos clientes por atender; nuestra tardanza se debe a eso. Disculpa de antemano.</li>
+          <li><strong>Si alguna cuenta presenta fallas, NO HACEMOS DEVOLUCIÓN DE DINERO</strong> porque no tenemos el tiempo para gestionarlo.</li>
+          <li><strong>Las cuentas pueden dañarse</strong>; por eso SOMOS SINCEROS, pero nuestro equipo RESPONDE POR TODAS.</li>
+          <li><strong>Tenemos TÉRMINOS DE COMPRA muy claros</strong>; deben leerlos antes de pagar.</li>
+          <li><strong>Si luego de comprar molestas y no tienes paciencia</strong>, el perjudicado serás tú, ya que atendemos de abajo hacia arriba y no prestamos atención a personas sin respeto y sin educación.</li>
+          <li><strong>Tenemos respuesta para cada cuenta</strong>, solo hay que TENER PACIENCIA; reponemos días de más por las demoras.</li>
+          <li><strong>Si deseas hablar mal de nuestro trabajo</strong>, simplemente serás ignorado y se te enviará a revisar nuestra parte informativa en la página web porque no tenemos tiempo para pelear con clientes que no leen.</li>
+        </ol>
+
+        <p>Esperamos que hayas leído con atención cada punto explicado; ahora lee el próximo sobre <strong>¿CÓMO COMPRAR?</strong></p>
+        <p><strong>NO TARDES EN UNIRTE A NUESTRA COMUNIDAD DE CLIENTES</strong></p>
+        <p>¿Alguna duda o pregunta? Escríbenos a nuestro chat anclado en la página web.</p>
+
+        <button class="close" onclick="closeSection('sec-info')">Cerrar</button>
+      </section>
+
+      <!-- COMO COMPRAR -->
+      <section id="sec-comprar" class="section" aria-hidden="true">
+        <h2>Cómo comprar</h2>
+
+        <h3>PRIMEROS PUNTOS IMPORTANTES</h3>
+        <ul>
+          <li>Lo primero: solo recibimos pedidos de cuentas <strong>VÍA WHATSAPP</strong>; la entrega es por WhatsApp.</li>
+          <li>Para revendedores en CHILE: tenemos números de WhatsApp por cada servicio (tiendas por servicio).</li>
+          <li>Clientes fuera de CHILE: serán atendidos en nuestro WhatsApp principal.</li>
+        </ul>
+
+        <h3>Ahora bien, para comprar es muy fácil:</h3>
+        <ol>
+          <li>Al escribir a nuestro WhatsApp principal, te enviaremos una lista actualizada de precios y el catálogo completo.</li>
+          <li>Clientes chilenos: presta atención a nuestros números de contacto por cada servicio.</li>
+          <li>Las PROMOCIONES se publican mayormente en historias de WhatsApp; recomendamos agregar nuestros números a tus contactos.</li>
+          <li>Enviamos dos emojis que sirven para ordenar el trabajo internamente.</li>
+          <li>NO ACUMULAMOS DINERO: compra lo que necesites en el momento; el precio no cambia.</li>
+          <li>Nuestros precios están diseñados para que puedas revender; recomendamos vender al doble (ej.: si una cuenta está en 1.000, puedes venderla en 2.000).</li>
+          <li>Apenas se entrega la cuenta, viene ACTIVA (no se activa al entregar).</li>
+          <li>Si no entiendes la instalación o uso, revisa la página web donde están todas las instrucciones.</li>
+          <li>Sólo falta solicitar el método de pago.</li>
+        </ol>
+
+        <p>Esperamos que hayas leído con atención; luego continúa con la sección <strong>MÉTODOS DE PAGO</strong>.</p>
+        <p>¿Dudas o preguntas? Escríbenos al chat anclado en la página web.</p>
+
+        <button class="close" onclick="closeSection('sec-comprar')">Cerrar</button>
+      </section>
+
+      <!-- METODOS DE PAGO -->
+      <section id="sec-pago" class="section" aria-hidden="true">
+        <h2>Métodos de pago</h2>
+
+        <ul>
+          <li>Nos hacemos responsables por cualquier inconveniente con la cuenta, pero <strong>NO HACEMOS REEMBOLSOS DE DINERO</strong>.</li>
+          <li>La entrega se realiza con paciencia; trabajamos lo más rápido posible pese a la gran cantidad de clientes.</li>
+          <li>Luego de recibir comprobante, marcamos la venta y se procesa la entrega.</li>
+          <li>Garantía totalmente asegurada; cada día perdido se cumple e incluso reponemos días de más si corresponde.</li>
+          <li>EN WHATSAPP SE INDICA EL MEDIO DE PAGO CORRESPONDIENTE.</li>
+          <li>Si no entiendes cómo hacer un depósito/transferencia, solicita ayuda a un familiar o amigo; no disponemos del tiempo para explicarlo en detalle.</li>
+          <li>Presta atención por si hay algún cambio en la cuenta bancaria; mayormente usamos las mismas.</li>
+        </ul>
+
+        <p>Esperamos que hayas leído con atención; ahora continúa con <strong>TÉRMINOS DE COMPRA</strong>.</p>
+        <p>¿Dudas? Escríbenos al chat anclado en la página web.</p>
+
+        <button class="close" onclick="closeSection('sec-pago')">Cerrar</button>
+      </section>
+
+      <!-- TERMINOS -->
+      <section id="sec-terminos" class="section" aria-hidden="true">
+        <h2>Términos de compra</h2>
+
+        <h3>OFRECEMOS 2 TIPOS DE CUENTAS</h3>
+
+        <h4>CUENTAS AUTOPAGABLES</h4>
+        <ul>
+          <li>No son métodos genéricos; NO sufrimos caídas masivas.</li>
+          <li>Las cuentas que se dañan y dejan de existir se reponen con una CUENTA NUEVA.</li>
+          <li>Algunas cuentas poseen un dueño que las autopaga; nosotros solo ingresamos y disfrutamos del servicio.</li>
+          <li>Las cuentas NO pueden ser editadas ni los perfiles, porque corren el riesgo de dañarse.</li>
+          <li>Entregamos garantía aun si la cuenta le faltan 3 días para vencer; repondremos el tiempo comprado.</li>
+          <li>La entrega es INMEDIATA, pero en ocasiones por alta demanda puede tardar.</li>
+          <li>En casos extremos que las cuentas dejan de funcionar, optamos por cambios de servicios otorgando más tiempo y descuentos.</li>
+        </ul>
+
+        <h4>CUENTAS PERSONALES</h4>
+        <ul>
+          <li>Usamos métodos estables para evitar caídas masivas.</li>
+          <li>Las cuentas que se dañan son reparadas o reemplazadas en el menor tiempo posible.</li>
+          <li>Las cuentas son totalmente EDITABLES internamente.</li>
+          <li>No se puede editar el correo ni la clave porque existe riesgo de caída sin garantía.</li>
+          <li>Cumplimos con el tiempo estimado de cada servicio.</li>
+        </ul>
+
+        <h3>PUNTOS IMPORTANTES</h3>
+        <ul>
+          <li>Somos TRANSPARENTES y queremos informarte lo que brindamos de antemano.</li>
+          <li>Si vas a molestar o faltar el respeto, mejor no compres; trabajamos con personas educadas.</li>
+          <li>Atención: están comprando algo que NO ES ORIGINAL; lo original se compra en la página oficial.</li>
+          <li>Si no tenemos stock, informamos y marcamos saldo para que el cliente solicite otro servicio.</li>
+          <li>HAY STOCK SUFICIENTE PARA SURTIR A TODOS Y SEGUIR VENDIENDO COMO COMUNIDAD.</li>
+          <li>ENTRE MÁS ESTABILIDAD, MÁS COSTOSA SERÁ LA CUENTA.</li>
+          <li>CON UN USO CORRECTO LAS CUENTAS DURARÁN MÁS SIN COSTO ADICIONAL; PERO SOLO CUMPLIMOS EL TIEMPO ESTIMADO.</li>
+          <li>LAS CUENTAS SON LIMITADAS; PREGUNTA DISPONIBILIDAD.</li>
+          <li>OFRECEMOS AL MEJOR PRECIO PARA QUE REVENDAN SIN LÍMITES.</li>
+          <li>LOS DATOS BANCARIOS ESTÁN CON LA LISTA DE PRECIOS.</li>
+          <li>NO HAY REEMBOLSOS DE DINERO EN NINGÚN CONCEPTO.</li>
+        </ul>
+
+        <p>SI NO ACEPTA: esperamos que tenga buen día y puede seguir nuestras historias para cambios futuros.</p>
+        <p>SI ACEPTA LOS TÉRMINOS: BIENVENIDO A NUESTRA COMUNIDAD. MUCHAS GRACIAS POR INFORMARTE. <strong>SOMOS BLACKSTREAMCL</strong></p>
+
+        <button class="close" onclick="closeSection('sec-terminos')">Cerrar</button>
+      </section>
+
+      <!-- SOPORTE -->
+      <section id="sec-soporte" class="section" aria-hidden="true">
+        <h2>Soporte 24/7</h2>
+
+        <p>
+          Nos comprometemos a brindarte atención continua y asistencia en cualquier momento del día.
+          En caso de que la cuenta presente fallas, deje de funcionar o sea desactivada, garantizamos su reposición inmediata durante todo el período de su suscripción.
+        </p>
+
+        <p>
+          Nuestro equipo está disponible las 24 horas, los 7 días de la semana, para asegurar que siempre disfrutes del servicio sin interrupciones.
+        </p>
+
+        <p>
+          Importante: Esta política se aplica únicamente mientras la suscripción se encuentre activada
+          y debe consultarse junto a los Términos de Compra para conocer las condiciones completas del servicio.
+        </p>
+
+        <button class="close" onclick="closeSection('sec-soporte')">Cerrar</button>
+      </section>
+
     </div>
 
-    <div class="card" onclick="openSection('comprar')">
-        <div class="card-title">Cómo Comprar</div>
-        <p>Proceso completo para realizar tus compras</p>
-    </div>
+    <footer>© BlackStreamCL — Comunidad oficial. Lee los términos antes de comprar.</footer>
 
-    <div class="card" onclick="openSection('pagos')">
-        <div class="card-title">Métodos de Pago</div>
-        <p>Información sobre pagos y garantías</p>
-    </div>
+  </div>
 
-    <div class="card" onclick="openSection('terminos')">
-        <div class="card-title">Términos de Compra</div>
-        <p>Condiciones y normas del servicio</p>
-    </div>
+<script>
+  // abre la sección y oculta las demás
+  function openSection(id){
+    document.querySelectorAll('.section').forEach(s=>{
+      s.classList.remove('active');
+      s.setAttribute('aria-hidden','true');
+    });
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.add('active');
+    el.setAttribute('aria-hidden','false');
+    // scroll a sección para móvil/pc:
+    window.scrollTo({top: el.offsetTop - 24, behavior:'smooth'});
+  }
 
-    <div class="card" onclick="openSection('soporte')">
-        <div class="card-title">Soporte 24/7</div>
-        <p>Atención y ayuda en todo momento</p>
-    </div>
+  function closeSection(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove('active');
+    el.setAttribute('aria-hidden','true');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
 
-</div>
-
-<!-- SECCIONES -->
-
-<div id="catalogo" class="section">
-    <h3>Catálogo de Servicios</h3>
-    <ul>
-        <li>Netflix</li>
-        <li>Disney+</li>
-        <li>Amazon Prime Video</li>
-        <li>Spotify</li>
-        <li>HBO Max</li>
-        <li>YouTube Premium</li>
-        <li>Crunchyroll</li>
-        <li>IPTV</li>
-        <li>TNT Sports</li>
-        <li>DirecTV Go</li>
-        <li>VIX+</li>
-        <li>Apple TV+</li>
-        <li>ChatGPT</li>
-        <li>WWE Network</li>
-        <li>NBA League Pass</li>
-        <li>Canva Pro</li>
-        <li>CapCut PRO</li>
-        <li>Pornhub Premium</li>
-    </ul>
-
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
-
-<div id="info" class="section">
-    <h3>Información Importante</h3>
-    <p>Aquí va tu texto personalizado...</p>
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
-
-<div id="comprar" class="section">
-    <h3>Cómo Comprar</h3>
-    <p>Aquí va tu proceso de compra...</p>
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
-
-<div id="pagos" class="section">
-    <h3>Métodos de Pago</h3>
-    <p>Aquí van los métodos de pago aceptados...</p>
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
-
-<div id="terminos" class="section">
-    <h3>Términos de Compra</h3>
-    <p>Términos y condiciones...</p>
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
-
-<div id="soporte" class="section">
-    <h3>Soporte 24/7</h3>
-    <p>Información de contacto y soporte...</p>
-    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
-</div>
+  // accesibilidad: Enter on cards
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.section.active').forEach(s=>{
+        s.classList.remove('active'); s.setAttribute('aria-hidden','true');
+      });
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+</script>
 
 </body>
 </html>
