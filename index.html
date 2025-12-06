@@ -1,176 +1,210 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BlackStreamCL - Foro</title>
-    <style>
-        body {
-            background-color: #0d0d0d;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackStreamCL - Foro Informativo</title>
 
-        header {
-            background: #111;
-            padding: 20px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f1115;
+        color: #e5e5e5;
+        text-align: center;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: auto;
-            padding: 30px 0;
-        }
+    h1 {
+        font-size: 48px;
+        margin-top: 40px;
+        font-weight: 800;
+        color: #d94cff;
+    }
 
-        h2 {
-            margin-top: 40px;
-            background: #1a1a1a;
-            padding: 15px;
-            border-left: 5px solid #b300ff;
-        }
+    h2 {
+        margin-bottom: 8px;
+    }
 
-        details {
-            background: #1a1a1a;
-            margin-top: 10px;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+    .subtitle {
+        margin-bottom: 50px;
+        font-size: 18px;
+        opacity: 0.7;
+    }
 
-        summary {
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 25px;
+    }
 
-        .catalogo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
+    .card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 25px;
+        text-align: left;
+        transition: 0.2s;
+        cursor: pointer;
+    }
 
-        .item {
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            border: 1px solid #333;
-        }
+    .card:hover {
+        background: rgba(255,255,255,0.08);
+        transform: scale(1.02);
+    }
 
-        .item:hover {
-            background: #2a2a2a;
-        }
-    </style>
+    .card-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #d94cff;
+    }
+
+    .card p {
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+    .section {
+        width: 90%;
+        max-width: 900px;
+        background: #16181d;
+        margin: 40px auto;
+        padding: 25px;
+        border-radius: 12px;
+        display: none;
+        text-align: left;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .section h3 {
+        color: #d94cff;
+        font-size: 26px;
+    }
+
+    .close-btn {
+        background: #d94cff;
+        border: none;
+        padding: 10px 18px;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+</style>
+
+<script>
+function openSection(id) {
+    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+    document.getElementById(id).style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
 </head>
+
 <body>
 
-<header>BlackStreamCL — Foro Oficial</header>
+<h1>BlackStreamCL</h1>
+<p class="subtitle">Todo tu entretenimiento, en un solo lugar</p>
 
 <div class="container">
 
-    <!-- CATÁLOGO -->
-    <h2>Catálogo de Servicios</h2>
-    <div class="catalogo">
-        <div class="item">Netflix</div>
-        <div class="item">Disney+</div>
-        <div class="item">Amazon Prime</div>
-        <div class="item">Spotify</div>
-        <div class="item">HBO Max</div>
-        <div class="item">YouTube</div>
-        <div class="item">Crunchyroll</div>
-        <div class="item">IPTV</div>
-        <div class="item">TNT</div>
-        <div class="item">DirecTV Go</div>
-        <div class="item">VIX</div>
-        <div class="item">Apple TV</div>
-        <div class="item">ChatGPT</div>
-        <div class="item">WWE</div>
-        <div class="item">NBA</div>
-        <div class="item">Canva</div>
-        <div class="item">CapCut PRO</div>
-        <div class="item">Pornhub Premium</div>
+    <div class="card" onclick="openSection('catalogo')">
+        <div class="card-title">Catálogo</div>
+        <p>Todos los servicios de streaming disponibles</p>
     </div>
 
-    <!-- SECCIÓN: INFORMACIÓN IMPORTANTE -->
-    <h2>Información importante</h2>
-    <details>
-        <summary>Ver detalles</summary>
-        <p>
-            Somos TRANSPARENTES y queremos informarte lo que te brindamos de antemano.
-            Si vas a molestar o faltar el respeto mejor no compres, trabajamos con personas educadas.
-            Estás comprando algo que no es original, lo original se compra por su página oficial.
-            Si no tenemos más stock, informamos y marcamos saldo para que el cliente elija otro servicio.
-            Entre más estabilidad, más costosa será la cuenta.
-            No hay reembolsos de dinero en ningún concepto.
-            Siempre serás bienvenido a BlackStreamCL.
-        </p>
-    </details>
+    <div class="card" onclick="openSection('info')">
+        <div class="card-title">Información Importante</div>
+        <p>Todo lo que debes saber antes de comprar</p>
+    </div>
 
-    <!-- SECCIÓN: CÓMO COMPRAR -->
-    <h2>Cómo comprar</h2>
-    <details>
-        <summary>Ver detalles</summary>
-        <p>
-            El proceso es simple: preguntas disponibilidad, seleccionas servicio, envías comprobante y recibes tu cuenta.
-            La entrega es inmediata, aunque en momentos de alta demanda puede tardar un poco más.
-            Cumplimos con el tiempo estimado de cada servicio según el tipo de cuenta.
-        </p>
-    </details>
+    <div class="card" onclick="openSection('comprar')">
+        <div class="card-title">Cómo Comprar</div>
+        <p>Proceso completo para realizar tus compras</p>
+    </div>
 
-    <!-- SECCIÓN: MÉTODOS DE PAGO -->
-    <h2>Métodos de pago</h2>
-    <details>
-        <summary>Ver detalles</summary>
-        <p>
-            Los datos bancarios se entregan junto con la lista oficial de precios según el servicio seleccionado.
-            Guardamos registro del saldo a favor si no hubiese stock disponible.
-        </p>
-    </details>
+    <div class="card" onclick="openSection('pagos')">
+        <div class="card-title">Métodos de Pago</div>
+        <p>Información sobre pagos y garantías</p>
+    </div>
 
-    <!-- SECCIÓN: TÉRMINOS DE COMPRA -->
-    <h2>Términos de compra</h2>
-    <details>
-        <summary>Ver detalles</summary>
-        
-        <h3>Ofrecemos 2 tipos de cuentas</h3>
+    <div class="card" onclick="openSection('terminos')">
+        <div class="card-title">Términos de Compra</div>
+        <p>Normas y condiciones del servicio</p>
+    </div>
 
-        <h4>CUENTAS AUTOPAGABLES</h4>
-        <p>
-            No son métodos genéricos, por lo que no sufrimos caídas masivas.
-            Las cuentas dañadas se reponen con una nueva.
-            Algunas tienen dueño que las autopaga, solo debes entrar y disfrutar.
-            No se pueden editar perfiles ni configuración interna.
-            Entregamos garantía aunque la cuenta esté cerca de vencer.
-            La entrega suele ser inmediata.
-            En casos extremos cambiamos servicio otorgando más tiempo o descuentos.
-        </p>
+    <div class="card" onclick="openSection('soporte')">
+        <div class="card-title">Soporte 24/7</div>
+        <p>Atención y asistencia en todo momento</p>
+    </div>
 
-        <h4>CUENTAS PERSONALES</h4>
-        <p>
-            Usamos métodos estables para evitar caídas masivas.
-            Las cuentas dañadas se reparan o se reemplazan.
-            Son totalmente editables internamente, excepto correo y clave.
-            Cumplimos con el tiempo estimado del servicio adquirido.
-        </p>
+</div>
 
-        <h3>Puntos importantes</h3>
-        <p>
-            Las cuentas son limitadas; pregunta disponibilidad.
-            Ofrecemos al mejor precio para revendedores.
-            No hay reembolsos bajo ningún concepto.
-            Si no acepta los términos, le deseamos un buen día.
-            Si acepta los términos: Bienvenido a nuestra comunidad. Muchas gracias por informarte.
-        </p>
-    </details>
+<!-- SECCIONES -->
 
+<div id="catalogo" class="section">
+    <h3>Catálogo de Servicios</h3>
+    <p>Estos son los servicios disponibles que puedes comprar en BlackStreamCL:</p>
+
+    <ul>
+        <li>Netflix</li>
+        <li>Disney+</li>
+        <li>Amazon Prime Video</li>
+        <li>Spotify</li>
+        <li>HBO Max</li>
+        <li>YouTube Premium</li>
+        <li>Crunchyroll</li>
+        <li>IPTV</li>
+        <li>TNT Sports</li>
+        <li>DirecTV Go</li>
+        <li>VIX+</li>
+        <li>Apple TV+</li>
+        <li>ChatGPT</li>
+        <li>WWE Network</li>
+        <li>NBA League Pass</li>
+        <li>Canva Pro</li>
+        <li>CapCut PRO</li>
+        <li>Pornhub Premium</li>
+    </ul>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
+</div>
+
+<div id="info" class="section">
+    <h3>Información Importante</h3>
+    <p>Aquí va todo tu texto personalizado sobre funcionamiento, duración, reglas, políticas, etc.</p>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
+</div>
+
+<div id="comprar" class="section">
+    <h3>Cómo Comprar</h3>
+    <p>Explicación detallada del proceso para comprar en BlackStreamCL.</p>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
+</div>
+
+<div id="pagos" class="section">
+    <h3>Métodos de Pago</h3>
+    <p>Listado de pagos aceptados y garantías.</p>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
+</div>
+
+<div id="terminos" class="section">
+    <h3>Términos de Compra</h3>
+    <p>Normas, condiciones y responsabilidades del comprador.</p>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
+</div>
+
+<div id="soporte" class="section">
+    <h3>Soporte 24/7</h3>
+    <p>Información sobre atención al cliente, WhatsApp y asistencia.</p>
+
+    <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
 </body>
