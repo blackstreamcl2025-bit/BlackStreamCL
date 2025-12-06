@@ -14,15 +14,17 @@
         text-align: center;
     }
 
-    h1 {
-        font-size: 48px;
+    .logo {
+        width: 150px;
         margin-top: 40px;
-        font-weight: 800;
-        color: #d94cff;
+        margin-bottom: 10px;
     }
 
-    h2 {
-        margin-bottom: 8px;
+    h1 {
+        font-size: 48px;
+        margin-top: 10px;
+        font-weight: 800;
+        color: #d94cff;
     }
 
     .subtitle {
@@ -105,6 +107,9 @@ function openSection(id) {
 
 <body>
 
+<!-- LOGO -->
+<img src="logo.png" alt="BlackStreamCL Logo" class="logo">
+
 <h1>BlackStreamCL</h1>
 <p class="subtitle">Todo tu entretenimiento, en un solo lugar</p>
 
@@ -132,12 +137,12 @@ function openSection(id) {
 
     <div class="card" onclick="openSection('terminos')">
         <div class="card-title">Términos de Compra</div>
-        <p>Normas y condiciones del servicio</p>
+        <p>Condiciones y normas del servicio</p>
     </div>
 
     <div class="card" onclick="openSection('soporte')">
         <div class="card-title">Soporte 24/7</div>
-        <p>Atención y asistencia en todo momento</p>
+        <p>Atención y ayuda en todo momento</p>
     </div>
 
 </div>
@@ -146,8 +151,6 @@ function openSection(id) {
 
 <div id="catalogo" class="section">
     <h3>Catálogo de Servicios</h3>
-    <p>Estos son los servicios disponibles que puedes comprar en BlackStreamCL:</p>
-
     <ul>
         <li>Netflix</li>
         <li>Disney+</li>
@@ -174,36 +177,31 @@ function openSection(id) {
 
 <div id="info" class="section">
     <h3>Información Importante</h3>
-    <p>Aquí va todo tu texto personalizado sobre funcionamiento, duración, reglas, políticas, etc.</p>
-
+    <p>Aquí va tu texto personalizado...</p>
     <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
 <div id="comprar" class="section">
     <h3>Cómo Comprar</h3>
-    <p>Explicación detallada del proceso para comprar en BlackStreamCL.</p>
-
+    <p>Aquí va tu proceso de compra...</p>
     <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
 <div id="pagos" class="section">
     <h3>Métodos de Pago</h3>
-    <p>Listado de pagos aceptados y garantías.</p>
-
+    <p>Aquí van los métodos de pago aceptados...</p>
     <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
 <div id="terminos" class="section">
     <h3>Términos de Compra</h3>
-    <p>Normas, condiciones y responsabilidades del comprador.</p>
-
+    <p>Términos y condiciones...</p>
     <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
 <div id="soporte" class="section">
     <h3>Soporte 24/7</h3>
-    <p>Información sobre atención al cliente, WhatsApp y asistencia.</p>
-
+    <p>Información de contacto y soporte...</p>
     <button class="close-btn" onclick="this.parentElement.style.display='none'">Cerrar</button>
 </div>
 
