@@ -500,6 +500,59 @@
     }
   });
 </script>
+<!-- BOTÓN INSTAGRAM NEÓN (ESQUINA SUPERIOR IZQUIERDA) -->
+<a href="https://instagram.com/BlackStreamCL" target="_blank" class="insta-neon">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
+
+<style>
+  .insta-neon {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(15, 0, 30, 0.45);
+    backdrop-filter: blur(4px);
+    border: 2px solid #b300ff;
+    box-shadow: 
+      0 0 10px #b300ff,
+      0 0 20px #ff00cc,
+      0 0 30px #b300ff;
+
+    transition: 0.3s ease;
+    z-index: 9999;
+  }
+
+  .insta-neon img {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 0 6px #ff00f7);
+  }
+
+  @keyframes neonPulse {
+    0% {
+      box-shadow: 0 0 10px #b300ff, 0 0 20px #ff00cc, 0 0 30px #b300ff;
+    }
+    50% {
+      box-shadow: 0 0 15px #d700ff, 0 0 25px #ff33dd, 0 0 40px #ff00cc;
+    }
+    100% {
+      box-shadow: 0 0 10px #b300ff, 0 0 20px #ff00cc, 0 0 30px #b300ff;
+    }
+  }
+
+  .insta-neon:hover {
+    transform: scale(1.12);
+    animation: neonPulse 1s infinite;
+    border-color: #ff00cc;
+  }
+</style>
 
 </body>
 </html>
